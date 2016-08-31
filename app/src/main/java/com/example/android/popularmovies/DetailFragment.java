@@ -55,6 +55,10 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     private ImageView mIconView;
     private TextView movieTextView;
+    private TextView movieTitleTextView;
+    private TextView movieSynopsisTextView;
+    private TextView runningTimeTextView;
+    private TextView releaseDateTextView;
 
     public DetailFragment() {
         setHasOptionsMenu(true);
@@ -72,11 +76,20 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         }
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        movieTitleTextView =  (TextView) rootView.findViewById(R.id.movie_title_textview);
+        movieTitleTextView.setText("Chappie");
         mIconView = (ImageView) rootView.findViewById(R.id.detail_icon);
-        //Url imageUrl = new Url("http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg");
+        //Picasso.with(getActivity().getApplicationContext()).load("http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg").into(mIconView);
         Picasso.with(getActivity().getApplicationContext()).load("http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg").into(mIconView);
-        movieTextView = (TextView) rootView.findViewById(R.id.detail_low_textview);
+        movieTextView = (TextView) rootView.findViewById(R.id.release_year_textview);
         movieTextView.setText(textToShow);
+        runningTimeTextView = (TextView) rootView.findViewById(R.id.running_time_textview);
+        runningTimeTextView.setText("120min");
+        releaseDateTextView = (TextView) rootView.findViewById(R.id.release_date_textview);
+        releaseDateTextView.setText("8.1/10");
+        movieSynopsisTextView = (TextView) rootView.findViewById(R.id.movie_synopsis_textview);
+        movieSynopsisTextView.setText("This is a long sample text for movie story line. Contains multiple lines about Chappie the Robot!");
+
         return rootView;
     }
 
