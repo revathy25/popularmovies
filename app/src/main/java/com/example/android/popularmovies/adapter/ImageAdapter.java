@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.popularmovies.R;
+import com.squareup.picasso.Picasso;
 
 public class ImageAdapter extends BaseAdapter {
 	private Context context;
