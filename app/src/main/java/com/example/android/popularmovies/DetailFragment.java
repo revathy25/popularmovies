@@ -80,7 +80,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         movieTitleTextView.setText("Chappie");
         mIconView = (ImageView) rootView.findViewById(R.id.detail_icon);
         //Picasso.with(getActivity().getApplicationContext()).load("http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg").into(mIconView);
-        Picasso.with(getActivity().getApplicationContext()).load("http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg").into(mIconView);
+        ///lH2Ga8OzjU1XlxJ73shOlPx6cRw.jpg /nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg
+        Picasso.with(getActivity().getApplicationContext()).load("http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg").into(mIconView);
         movieTextView = (TextView) rootView.findViewById(R.id.release_year_textview);
         movieTextView.setText(textToShow);
         runningTimeTextView = (TextView) rootView.findViewById(R.id.running_time_textview);
@@ -123,7 +124,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         if ( null != mUri ) {
             // Now create and return a CursorLoader that will take care of
             // creating a Cursor for the data being displayed.
-            /*
+        /*
             return new CursorLoader(
                     getActivity(),
                     mUri,

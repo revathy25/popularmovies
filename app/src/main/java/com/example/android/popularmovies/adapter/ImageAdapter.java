@@ -8,16 +8,21 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.popularmovies.MovieData;
 import com.example.android.popularmovies.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class ImageAdapter extends BaseAdapter {
 	private Context context;
-	private final String[] mobileValues;
+	//private final String[] mobileValues;
+	private ArrayList<MovieData> gridViewData;
+	private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w185";
 
-	public ImageAdapter(Context context, String[] mobileValues) {
+	public ImageAdapter(Context context, ArrayList<MovieData> movieData) {
 		this.context = context;
-		this.mobileValues = mobileValues;
+		this.gridViewData = movieData;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -33,16 +38,19 @@ public class ImageAdapter extends BaseAdapter {
 
 			// get layout from mobile.xml
 			gridView = inflater.inflate(R.layout.mobile, null);
-
+			MovieData gridItemData = (MovieData)gridViewData.get(position);
 			// set value into textview
+			/*
 			TextView textView = (TextView) gridView
 					.findViewById(R.id.grid_item_label);
-			textView.setText(mobileValues[position]);
-
+			//textView.setText(mobileValues[position]);
+			textView.setText(gridItemData.getMovieName()); */
 			// set image based on selected text
 			ImageView imageView = (ImageView) gridView
 					.findViewById(R.id.grid_item_image);
 
+			Picasso.with(context).load(IMAGE_BASE_URL+gridItemData.getImageRelativePath()).into(imageView);
+/*
 			String mobile = mobileValues[position];
 
 			if (mobile.equals("Windows")) {
@@ -54,7 +62,7 @@ public class ImageAdapter extends BaseAdapter {
 			} else {
 				imageView.setImageResource(R.drawable.android_logo);
 			}
-
+*/
 		} else {
 			gridView = (View) convertView;
 		}
@@ -64,7 +72,7 @@ public class ImageAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return mobileValues.length;
+		return gridViewData.size();
 	}
 
 	@Override

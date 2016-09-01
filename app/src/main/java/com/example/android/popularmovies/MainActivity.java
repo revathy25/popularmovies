@@ -16,12 +16,15 @@ import android.widget.Toast;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
 	GridView gridView;
 
-	static final String[] MOBILE_OS = new String[] { "Android", "iOS",
-			"Windows", "Blackberry" };
+	//static final String[] MOBILE_OS = new String[] { "Android", "iOS",
+	//		"Windows", "Blackberry" };
+	private ArrayList<MovieData> popularMovies;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -31,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
 
 		gridView = (GridView) findViewById(R.id.gridView1);
 
-		gridView.setAdapter(new ImageAdapter(this, MOBILE_OS));
-
+		//gridView.setAdapter(new ImageAdapter(this, MOBILE_OS));
+		gridView.setAdapter(new ImageAdapter(this , getPopularMoviesData()));
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				CharSequence toastText = ((TextView) v.findViewById(R.id.grid_item_label)).getText();
+				CharSequence toastText = "";//((TextView) v.findViewById(R.id.grid_item_label)).getText();
 				Toast.makeText(
 						getApplicationContext(),toastText
 						, Toast.LENGTH_SHORT).show();
@@ -47,6 +50,23 @@ public class MainActivity extends AppCompatActivity {
 			}
 		});
 
+	}
+
+	private ArrayList<MovieData> getPopularMoviesData() {
+		popularMovies = new ArrayList<MovieData>();
+		MovieData m1 = new MovieData("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg","Suicide Squad");
+		popularMovies.add(m1);
+		MovieData m2 = new MovieData("/lFSSLTlFozwpaGlO31OoUeirBgQ.jpg","Jason Bourne");
+		popularMovies.add(m2);
+		MovieData m3 = new MovieData("/5N20rQURev5CNDcMjHVUZhpoCNC.jpg","Captain America: Civil War");
+		popularMovies.add(m3);
+		MovieData m4 = new MovieData("/tgfRDJs5PFW20Aoh1orEzuxW8cN.jpg","Mechanic: Resurrection");
+		popularMovies.add(m4);
+		MovieData m5 = new MovieData("/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","Interstellar");
+		popularMovies.add(m5);
+		MovieData m6 = new MovieData("/oDL2ryJ0sV2bmjgshVgJb3qzvwp.jpg","Teenage Mutant Ninja Turtles");
+		popularMovies.add(m6);
+		return popularMovies;
 	}
 
 	@Override
