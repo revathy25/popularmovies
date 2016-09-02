@@ -72,7 +72,11 @@ public class ImageAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return gridViewData.size();
+		if(gridViewData != null){
+			return gridViewData.size();
+
+		}
+		return 0;
 	}
 
 	@Override
@@ -83,6 +87,10 @@ public class ImageAdapter extends BaseAdapter {
 	@Override
 	public long getItemId(int position) {
 		return 0;
+	}
+
+	public void updateGridData(ArrayList<MovieData> movieData){
+		this.gridViewData = movieData;
 	}
 
 }

@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    defaultConfig {
+        buildConfigField "String", "MOVIE_BASE_URL", MOVIE_DB_URL_BASE
+        buildConfigField "String", "MOVIE_API_KEY",MOVIE_DB_API_KEY
+    }
 }
 
 dependencies {
