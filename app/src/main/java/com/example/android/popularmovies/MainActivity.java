@@ -2,10 +2,12 @@ package com.example.android.popularmovies;
 
 import com.example.android.popularmovies.adapter.ImageAdapter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Time;
@@ -48,10 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
 		gridView = (GridView) findViewById(R.id.gridView1);
 
-		//gridView.setAdapter(new ImageAdapter(this, MOBILE_OS));
-		//gridView.setAdapter(new ImageAdapter(this , getPopularMoviesData()));
-		//gridView.setAdapter(new ImageAdapter(this , popularMovies));
-		mImageAdapter = new ImageAdapter(this , getPopularMoviesData());
+		mImageAdapter = new ImageAdapter(this ,R.layout.mobile, getPopularMoviesData());
 		gridView.setAdapter(mImageAdapter);
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
@@ -75,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 		popularMovies.add(m1);
 		MovieData m2 = new MovieData("/lFSSLTlFozwpaGlO31OoUeirBgQ.jpg","Jason Bourne");
 		popularMovies.add(m2);
+		/*
 		MovieData m3 = new MovieData("/5N20rQURev5CNDcMjHVUZhpoCNC.jpg","Captain America: Civil War");
 		popularMovies.add(m3);
 		MovieData m4 = new MovieData("/tgfRDJs5PFW20Aoh1orEzuxW8cN.jpg","Mechanic: Resurrection");
@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 		popularMovies.add(m5);
 		MovieData m6 = new MovieData("/oDL2ryJ0sV2bmjgshVgJb3qzvwp.jpg","Teenage Mutant Ninja Turtles");
 		popularMovies.add(m6);
+		*/
 		return popularMovies;
 	}
 
@@ -234,26 +235,23 @@ public class MainActivity extends AppCompatActivity {
 			return null;
 		}
 
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		@Override
 		protected void onPostExecute( ArrayList<MovieData> result) {
+			Log.v(LOG_TAG, "In post Execute movie task:" + result);
 			if (result != null) {
-				//mForecastAdapter.clear();
-				mImageAdapter = new ImageAdapter(getApplicationContext(),result);
-				gridView.setAdapter(mImageAdapter);
-				gridView.setOnItemClickListener(new OnItemClickListener() {
-					public void onItemClick(AdapterView<?> parent, View v,
-											int position, long id) {
-						CharSequence toastText = "toast from post execute!";//((TextView) v.findViewById(R.id.grid_item_label)).getText();
-						Toast.makeText(
-								getApplicationContext(),toastText
-								, Toast.LENGTH_SHORT).show();
-						Intent intent = new Intent(MainActivity.this, DetailActivity.class)
-								.putExtra("ImageClicked",toastText);
-						startActivity(intent);
-
-					}
-				});
-
+				Log.v(LOG_TAG, "In post Execute movie task: MovieData Size" + result.size());
+				mImageAdapter.clear();
+				for(MovieData movieData : result) {
+					Log.v(LOG_TAG, "****In adding movie to adapter - MovieData: " + movieData);
+					mImageAdapter.add(movieData);
+				}
+				Log.v(LOG_TAG, "In post Execute movie task: mImageAdapter Size" + mImageAdapter.getCount());
+				Log.v(LOG_TAG, "In post Execute movie task: result.get(0):" + result.get(0).getMovieName()+ "mImageAdapter.get(0):" + mImageAdapter.getItem(0).toString());
+				mImageAdapter.notifyDataSetChanged();
+				Log.v(LOG_TAG, "***********notified data change to adapter" );
+			} else {
+				Log.v(LOG_TAG, "In post Execute Movie data from API was null" );
 			}
 		}
 	}
