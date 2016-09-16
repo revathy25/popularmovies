@@ -56,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
-				CharSequence toastText = "toast from initial load";//((TextView) v.findViewById(R.id.grid_item_label)).getText();
-				Toast.makeText(
+				//CharSequence toastText = "toast from initial load";//((TextView) v.findViewById(R.id.grid_item_label)).getText();
+				MovieData gridItemData = (MovieData)mImageAdapter.getItem(position);
+				CharSequence toastText = gridItemData.getMovieName();
+						Toast.makeText(
 						getApplicationContext(),toastText
 						, Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(MainActivity.this, DetailActivity.class)
@@ -71,9 +73,11 @@ public class MainActivity extends AppCompatActivity {
 
 	private ArrayList<MovieData> getPopularMoviesData() {
 		popularMovies = new ArrayList<MovieData>();
-		MovieData m1 = new MovieData("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg","Suicide Squad");
+		MovieData m1 = new MovieData("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg","Suicide Squad","2016-08-03","5.88",
+				"From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.");
 		popularMovies.add(m1);
-		MovieData m2 = new MovieData("/lFSSLTlFozwpaGlO31OoUeirBgQ.jpg","Jason Bourne");
+		MovieData m2 = new MovieData("/y31QB9kn3XSudA15tV7UWQ9XLuW.jpg","Guardians of the Galaxy","2014-07-30","7.96",
+				"Light years from Earth, 26 years after being abducted, Peter Quill finds himself the prime target of a manhunt after discovering an orb wanted by Ronan the Accuser.");
 		popularMovies.add(m2);
 		/*
 		MovieData m3 = new MovieData("/5N20rQURev5CNDcMjHVUZhpoCNC.jpg","Captain America: Civil War");
@@ -142,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
 			final String MOVIE_TITLE = "original_title";
 			final String MOVIE_RELEASE_DATE = "release_date";
 			final String MOVIE_SYNOPSIS = "overview";
+			final String MOVIE_VOTE_AVERAGE = "vote_average";
 			final String MOVIE_ID = "id";
 
 			JSONObject moviesJson = new JSONObject(moviesJsonStr);
@@ -152,7 +157,10 @@ public class MainActivity extends AppCompatActivity {
 				JSONObject movieJson = movieResultArray.getJSONObject(i);
 				String imagepath = movieJson.getString(MOVIE_IMAGE_PATH);
 				String title = movieJson.getString(MOVIE_TITLE);
-				MovieData data = new MovieData(imagepath, title);
+				String releaseDate = movieJson.getString(MOVIE_RELEASE_DATE);
+				String voteAverage = movieJson.getString(MOVIE_VOTE_AVERAGE);
+				String synopsis = movieJson.getString(MOVIE_SYNOPSIS);
+				MovieData data = new MovieData(imagepath,title,releaseDate,voteAverage,synopsis);
 				result.add(data);
 			}
 
