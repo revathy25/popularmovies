@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 	//static final String[] MOBILE_OS = new String[] { "Android", "iOS",
 	//		"Windows", "Blackberry" };
 	private ArrayList<MovieData> popularMovies;
+	public static final String API_RELEASE_DATE_FORMAT = "yyyy-MM-dd";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
 	private ArrayList<MovieData> getPopularMoviesData() {
 		popularMovies = new ArrayList<MovieData>();
-		MovieData m1 = new MovieData("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg","Suicide Squad","2016-08-03","5.88",
+		MovieData m1 = new MovieData("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg","Suicide Squad","2016", "2016-08-03","5.88",
 				"From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.");
 		popularMovies.add(m1);
-		MovieData m2 = new MovieData("/y31QB9kn3XSudA15tV7UWQ9XLuW.jpg","Guardians of the Galaxy","2014-07-30","7.96",
+		MovieData m2 = new MovieData("/y31QB9kn3XSudA15tV7UWQ9XLuW.jpg","Guardians of the Galaxy","2014","2014-07-30","7.96",
 				"Light years from Earth, 26 years after being abducted, Peter Quill finds himself the prime target of a manhunt after discovering an orb wanted by Ronan the Accuser.");
 		popularMovies.add(m2);
 		/*
@@ -157,15 +158,18 @@ public class MainActivity extends AppCompatActivity {
 				JSONObject movieJson = movieResultArray.getJSONObject(i);
 				String imagepath = movieJson.getString(MOVIE_IMAGE_PATH);
 				String title = movieJson.getString(MOVIE_TITLE);
-				String releaseDate = movieJson.getString(MOVIE_RELEASE_DATE);
+				String apiReleaseDate = movieJson.getString(MOVIE_RELEASE_DATE);
 				String voteAverage = movieJson.getString(MOVIE_VOTE_AVERAGE);
 				String synopsis = movieJson.getString(MOVIE_SYNOPSIS);
-				MovieData data = new MovieData(imagepath,title,releaseDate,voteAverage,synopsis);
+				String releaseyear = Utility.getYearFromDate(apiReleaseDate,API_RELEASE_DATE_FORMAT);
+				String detailPageFormatedDate = Utility.getDetailPageFormattedDate(apiReleaseDate,API_RELEASE_DATE_FORMAT);
+				Log.v(LOG_TAG, "***detailPageFormatedDate:" + detailPageFormatedDate);
+				MovieData data = new MovieData(imagepath,title,releaseyear,detailPageFormatedDate,voteAverage,synopsis);
 				result.add(data);
 			}
 
 			for (MovieData data : result) {
-				Log.v(LOG_TAG, "Movie entry: " + data);
+				Log.v(LOG_TAG, "****Movie entry: " + data);
 			}
 			return result;
 

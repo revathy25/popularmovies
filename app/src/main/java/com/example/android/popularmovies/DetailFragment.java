@@ -84,10 +84,10 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             Picasso.with(getActivity().getApplicationContext()).load(IMAGE_BASE_URL + movieDetailData.getImageRelativePath()).into(mIconView);
             movieTextView = (TextView) rootView.findViewById(R.id.release_year_textview);
            //TODO Just get year
-            movieTextView.setText(movieDetailData.getReleaseDate());
+            movieTextView.setText(movieDetailData.getReleaseYear());
             //TODO currently displaying vote average
             runningTimeTextView = (TextView) rootView.findViewById(R.id.running_time_textview);
-            runningTimeTextView.setText("Vote Average:"+movieDetailData.getVoteAverage());
+            runningTimeTextView.setText(movieDetailData.getVoteAverage());
             releaseDateTextView = (TextView) rootView.findViewById(R.id.release_date_textview);
             releaseDateTextView.setText(movieDetailData.getReleaseDate());
             movieSynopsisTextView = (TextView) rootView.findViewById(R.id.movie_synopsis_textview);

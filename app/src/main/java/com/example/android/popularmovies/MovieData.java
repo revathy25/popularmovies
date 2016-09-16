@@ -10,14 +10,16 @@ import android.os.Parcelable;
 public class MovieData implements Parcelable{
     String imageRelativePath;
     String movieName;
+    String releaseYear;
     String releaseDate;
     String voteAverage;
     String plotSynopsis;
 
-    public MovieData(String vImageRelativePath, String vMovieName, String vReleaseDate,String vVoteAverage,String vPlotSynopsis )
+    public MovieData(String vImageRelativePath, String vMovieName, String vReleaseYear,String vReleaseDate,String vVoteAverage,String vPlotSynopsis )
     {
         this.imageRelativePath = vImageRelativePath;
         this.movieName = vMovieName;
+        this.releaseYear = vReleaseYear;
         this.releaseDate = vReleaseDate;
         this.voteAverage = vVoteAverage;
         this.plotSynopsis = vPlotSynopsis;
@@ -26,6 +28,7 @@ public class MovieData implements Parcelable{
     private MovieData(Parcel in){
         imageRelativePath = in.readString();
         movieName = in.readString();
+        releaseYear = in.readString();
         releaseDate = in.readString();
         voteAverage = in.readString();
         plotSynopsis = in.readString();
@@ -44,6 +47,8 @@ public class MovieData implements Parcelable{
         return movieName;
     }
 
+    public String getReleaseYear() { return releaseYear; }
+
     public String getReleaseDate() { return releaseDate; }
 
     public String getVoteAverage() { return voteAverage; }
@@ -52,7 +57,7 @@ public class MovieData implements Parcelable{
 
     @Override
     public String toString() {
-        return "MovieData [imageRelativePath=" + imageRelativePath + ", movieName=" + movieName + ", releaseDate="
+        return "MovieData [imageRelativePath=" + imageRelativePath + ", movieName=" + movieName + ", releaseYear=" + releaseYear +", releaseDate="
                 + releaseDate + ", voteAverage=" + voteAverage + ", plotSynopsis=" + plotSynopsis + "]";
     }
 
@@ -60,6 +65,7 @@ public class MovieData implements Parcelable{
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(imageRelativePath);
         parcel.writeString(movieName);
+        parcel.writeString(releaseYear);
         parcel.writeString(releaseDate);
         parcel.writeString(voteAverage);
         parcel.writeString(plotSynopsis);

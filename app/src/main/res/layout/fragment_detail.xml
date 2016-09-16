@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="68sp" />
+            android:textSize="40sp" />
         <!-- Middle content: Movie Image , run time etc-->
         <LinearLayout
             android:layout_height="match_parent"
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:textAppearanceSmall"
                     android:textColor="@color/colorPrimaryDark" />
-
+                <!--
                 <Button
                     android:id="@+id/mark_As_fav_button"
                     android:layout_width="wrap_content"
@@ -77,6 +77,7 @@
                     android:width="60dp"
                     android:text="@string/action_mark_as_favorite"
                     android:textColor="@color/colorPrimaryDark" />
+                    -->
             </LinearLayout>
         </LinearLayout>
 
