@@ -74,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
 	private ArrayList<MovieData> getPopularMoviesData() {
 		popularMovies = new ArrayList<MovieData>();
-		MovieData m1 = new MovieData("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg","Suicide Squad","2016", "2016-08-03","5.88",
+		MovieData m1 = new MovieData("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg","Suicide Squad","2016", "08.03/16","5.88",
 				"From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.");
 		popularMovies.add(m1);
-		MovieData m2 = new MovieData("/y31QB9kn3XSudA15tV7UWQ9XLuW.jpg","Guardians of the Galaxy","2014","2014-07-30","7.96",
+		MovieData m2 = new MovieData("/y31QB9kn3XSudA15tV7UWQ9XLuW.jpg","Guardians of the Galaxy","2014","07.30/14","7.96",
 				"Light years from Earth, 26 years after being abducted, Peter Quill finds himself the prime target of a manhunt after discovering an orb wanted by Ronan the Accuser.");
 		popularMovies.add(m2);
 		/*
