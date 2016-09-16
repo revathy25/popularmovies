@@ -28,6 +28,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UTFDataFormatException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -113,7 +114,8 @@ public class MainActivity extends AppCompatActivity {
 			toastText="You selected Refresh menu! getting data from API!";
 			showToast(getApplicationContext(),toastText);
 			FetchMoviesTask movieTask = new FetchMoviesTask();
-			movieTask.execute("testParam");
+			String sortPreference = Utility.getPreferredSortOrder(getApplicationContext());
+			movieTask.execute(sortPreference);
 			return true;
 		}
 
@@ -163,6 +165,11 @@ public class MainActivity extends AppCompatActivity {
 		/* ########## End of JSON Parsing Helper methods ###### */
 		protected ArrayList<MovieData> doInBackground(String... params) {
 
+			// If there's no sort preference return null as we do not have the api url to build upon.
+			if (params.length == 0) {
+				return null;
+			}
+
 			HttpURLConnection urlConnection = null;
 			BufferedReader reader = null;
 
@@ -170,8 +177,9 @@ public class MainActivity extends AppCompatActivity {
 			String movieJsonStr = null;
 
 			try {
-				final String SORTBYPOPULAR = "popular";
-				final String MOVIEDB_BASE_URL = BuildConfig.MOVIE_BASE_URL + SORTBYPOPULAR;
+				final String SORTORDER = params[0];
+				Log.v(LOG_TAG, "SORTORDER:" + SORTORDER);
+				final String MOVIEDB_BASE_URL = BuildConfig.MOVIE_BASE_URL + SORTORDER;
 						//"http://api.themoviedb.org/3/movie/popular";
 				final String APPID_PARAM = "api_key";
 
