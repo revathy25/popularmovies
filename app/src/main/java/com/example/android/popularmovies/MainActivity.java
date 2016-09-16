@@ -105,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
 		if (id == R.id.action_settings) {
 			toastText="You selected settings menu!";
 			showToast(getApplicationContext(),toastText);
+			Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+			startActivity(intent);
 			return true;
 		} else if (id == R.id.action_refresh){
 			toastText="You selected Refresh menu! getting data from API!";
