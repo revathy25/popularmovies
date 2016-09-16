@@ -1,6 +1,7 @@
 package com.example.android.popularmovies;
 
 import com.example.android.popularmovies.adapter.ImageAdapter;
+import com.example.android.popularmovies.datasync.PopularMoviesSyncAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -44,13 +45,10 @@ public class MainActivity extends AppCompatActivity {
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		PopularMoviesSyncAdapter.initializeSyncAdapter(this);
 		setContentView(R.layout.activity_main);
 
 		gridView = (GridView) findViewById(R.id.gridView1);
-
-		//gridView.setAdapter(new ImageAdapter(this, MOBILE_OS));
-		//gridView.setAdapter(new ImageAdapter(this , getPopularMoviesData()));
-		//gridView.setAdapter(new ImageAdapter(this , popularMovies));
 		mImageAdapter = new ImageAdapter(this , getPopularMoviesData());
 		gridView.setAdapter(mImageAdapter);
 		gridView.setOnItemClickListener(new OnItemClickListener() {
@@ -105,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
 		if (id == R.id.action_settings) {
 			toastText="You selected settings menu!";
 			showToast(getApplicationContext(),toastText);
+			Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+			startActivity(intent);
 			return true;
 		} else if (id == R.id.action_refresh){
 			toastText="You selected Refresh menu! getting data from API!";
