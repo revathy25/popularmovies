@@ -65,7 +65,7 @@ public class MovieData implements Parcelable{
         parcel.writeString(plotSynopsis);
     }
 
-    public final Parcelable.Creator<MovieData> CREATOR = new Parcelable.Creator<MovieData>() {
+    public static  final Parcelable.Creator<MovieData> CREATOR = new Parcelable.Creator<MovieData>() {
         @Override
         public MovieData createFromParcel(Parcel parcel) {
             return new MovieData(parcel);

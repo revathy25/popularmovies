@@ -35,7 +35,8 @@ public class DetailActivity extends ActionBarActivity {
 
             Bundle arguments = new Bundle();
             //arguments.putParcelable(DetailFragment.DETAIL_URI, getIntent().getData());
-            arguments.putCharSequence("ImageClicked",getIntent().getStringExtra("ImageClicked"));
+            //arguments.putCharSequence("ImageClicked",getIntent().getStringExtra("ImageClicked"));
+            arguments.putParcelable("MovieDetailData", getIntent().getParcelableExtra("ImageClicked"));
 
             DetailFragment fragment = new DetailFragment();
             fragment.setArguments(arguments);

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 						getApplicationContext(),toastText
 						, Toast.LENGTH_SHORT).show();
 				Intent intent = new Intent(MainActivity.this, DetailActivity.class)
-						.putExtra("ImageClicked",toastText);
+						.putExtra("ImageClicked",gridItemData);
 				startActivity(intent);
 
 			}
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 			// These are the names of the JSON objects that need to be extracted.
 			final String MOVIE_RESULT_LIST = "results";
 			final String MOVIE_IMAGE_PATH = "poster_path";
-			final String MOVIE_TITLE = "original_title";
+			final String MOVIE_TITLE = "title";
 			final String MOVIE_RELEASE_DATE = "release_date";
 			final String MOVIE_SYNOPSIS = "overview";
 			final String MOVIE_VOTE_AVERAGE = "vote_average";

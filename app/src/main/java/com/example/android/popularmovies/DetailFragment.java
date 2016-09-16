@@ -44,6 +44,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     private static final String LOG_TAG = DetailFragment.class.getSimpleName();
     static final String DETAIL_URI = "URI";
+    private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w185";
 
     private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
 
@@ -69,27 +70,31 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
                              Bundle savedInstanceState) {
 
         Bundle arguments = getArguments();
-        CharSequence textToShow = "";
+        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        //CharSequence textToShow = "";
+        MovieData movieDetailData;
         if (arguments != null) {
             //mUri = arguments.getParcelable(DetailFragment.DETAIL_URI);
-            textToShow = arguments.getCharSequence("ImageClicked");
+            movieDetailData = (MovieData)arguments.getParcelable("MovieDetailData");
+            movieTitleTextView =  (TextView) rootView.findViewById(R.id.movie_title_textview);
+            movieTitleTextView.setText(movieDetailData.getMovieName());
+            mIconView = (ImageView) rootView.findViewById(R.id.detail_icon);
+            //Picasso.with(getActivity().getApplicationContext()).load("http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg").into(mIconView);
+            ///lH2Ga8OzjU1XlxJ73shOlPx6cRw.jpg /nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg
+            Picasso.with(getActivity().getApplicationContext()).load(IMAGE_BASE_URL + movieDetailData.getImageRelativePath()).into(mIconView);
+            movieTextView = (TextView) rootView.findViewById(R.id.release_year_textview);
+           //TODO Just get year
+            movieTextView.setText(movieDetailData.getReleaseDate());
+            //TODO currently displaying vote average
+            runningTimeTextView = (TextView) rootView.findViewById(R.id.running_time_textview);
+            runningTimeTextView.setText("Vote Average:"+movieDetailData.getVoteAverage());
+            releaseDateTextView = (TextView) rootView.findViewById(R.id.release_date_textview);
+            releaseDateTextView.setText(movieDetailData.getReleaseDate());
+            movieSynopsisTextView = (TextView) rootView.findViewById(R.id.movie_synopsis_textview);
+            movieSynopsisTextView.setText(movieDetailData.getPlotSynopsis());
         }
 
-        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-        movieTitleTextView =  (TextView) rootView.findViewById(R.id.movie_title_textview);
-        movieTitleTextView.setText("Chappie");
-        mIconView = (ImageView) rootView.findViewById(R.id.detail_icon);
-        //Picasso.with(getActivity().getApplicationContext()).load("http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg").into(mIconView);
-        ///lH2Ga8OzjU1XlxJ73shOlPx6cRw.jpg /nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg
-        Picasso.with(getActivity().getApplicationContext()).load("http://image.tmdb.org/t/p/w185/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg").into(mIconView);
-        movieTextView = (TextView) rootView.findViewById(R.id.release_year_textview);
-        movieTextView.setText(textToShow);
-        runningTimeTextView = (TextView) rootView.findViewById(R.id.running_time_textview);
-        runningTimeTextView.setText("120min");
-        releaseDateTextView = (TextView) rootView.findViewById(R.id.release_date_textview);
-        releaseDateTextView.setText("8.1/10");
-        movieSynopsisTextView = (TextView) rootView.findViewById(R.id.movie_synopsis_textview);
-        movieSynopsisTextView.setText("This is a long sample text for movie story line. Contains multiple lines about Chappie the Robot!");
+
 
         return rootView;
     }
