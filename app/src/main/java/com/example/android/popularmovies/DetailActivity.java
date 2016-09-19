@@ -15,15 +15,17 @@
  */
 package com.example.android.popularmovies;
 
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 public class DetailActivity extends AppCompatActivity {
+    private final String LOG_TAG = DetailActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +63,15 @@ public class DetailActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Log.v(LOG_TAG, "****onOptionsItemSelected id="+id + "android.R.id.home=" + android.R.id.home );
         if (id == R.id.action_settings) {
             Intent intent = new Intent(DetailActivity.this, SettingsActivity.class);
             startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }else if (id == android.R.id.home){
+            Log.v(LOG_TAG, "****onOptionsItemSelected android.R.id.home");
+            //NavUtils.navigateUpFromSameTask(this);
+            onBackPressed(); // http://stackoverflow.com/questions/24081862/enable-action-bar-back-button-like-hardware-back-button?rq=1
             return true;
         }
         return super.onOptionsItemSelected(item);
