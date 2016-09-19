@@ -8,21 +8,24 @@
         android:layout_gravity="left"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <!-- Header: movie title -->
         <TextView
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/movie_title_textview"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textColor="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:padding="16dp"
+            android:background="#009788"
+            android:textColor="#ffffff"
             android:textSize="40sp" />
         <!-- Middle content: Movie Image , run time etc-->
         <LinearLayout
             android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_width="match_parent"
             android:orientation="horizontal">
             <!--Middle content:  Left items - movie image -->
@@ -35,7 +38,6 @@
 
                 <ImageView
                     android:id="@+id/detail_icon"
-                    android:layout_margin="10dp"
                     android:minHeight="200dp"
                     android:minWidth="150dp"
                     android:layout_width="wrap_content"
@@ -84,8 +86,9 @@
         <!--bottom content:  Movie story line and trailers -->
         <LinearLayout
             android:layout_height="match_parent"
-            android:layout_marginRight="0dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_width="match_parent"
             android:orientation="vertical">
 
@@ -99,6 +102,7 @@
                 android:id="@+id/SplitLine_hor1"
                 android:layout_width="match_parent"
                 android:layout_height= "2dp"
+                android:layout_marginTop="4dp"
                 android:background="@color/colorPrimaryDark" />
 
             <ListView
