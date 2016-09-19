@@ -12,8 +12,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -33,8 +35,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+	private final String LOG_TAG = MainActivity.class.getSimpleName();
 
 	GridView gridView;
 	ImageAdapter mImageAdapter;
@@ -46,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
+		Log.v(LOG_TAG, "****onCreate savedInstanceState:" + savedInstanceState);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		gridView = (GridView) findViewById(R.id.gridView1);
-
-		mImageAdapter = new ImageAdapter(this ,R.layout.mobile, getPopularMoviesData());
+		executeFetchMovieTask();
+		mImageAdapter = new ImageAdapter(this ,R.layout.mobile, getPopularMoviesData(savedInstanceState));
 		gridView.setAdapter(mImageAdapter);
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
@@ -72,7 +77,23 @@ public class MainActivity extends AppCompatActivity {
 
 	}
 
-	private ArrayList<MovieData> getPopularMoviesData() {
+	private ArrayList<MovieData> getPopularMoviesData(Bundle savedInstanceState) {
+		if(popularMovies == null ) {
+			Log.v(LOG_TAG, "(popularMovies == null");
+			popularMovies = getHardcodedPopularMoviesData();
+		}
+		else if (!savedInstanceState.containsKey("popularmovies")){
+			Log.v(LOG_TAG, "****!savedInstanceState.containsKey");
+			popularMovies = getHardcodedPopularMoviesData();
+		}
+		else {
+			popularMovies = savedInstanceState.getParcelableArrayList("popularmovies");
+		}
+		Log.v(LOG_TAG, "****getPopularMoviesData: " + popularMovies);
+		return popularMovies;
+	}
+
+	private ArrayList<MovieData> getHardcodedPopularMoviesData() {
 		popularMovies = new ArrayList<MovieData>();
 		MovieData m1 = new MovieData("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg","Suicide Squad","2016", "08.03/16","5.88",
 				"From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.");
@@ -80,16 +101,6 @@ public class MainActivity extends AppCompatActivity {
 		MovieData m2 = new MovieData("/y31QB9kn3XSudA15tV7UWQ9XLuW.jpg","Guardians of the Galaxy","2014","07.30/14","7.96",
 				"Light years from Earth, 26 years after being abducted, Peter Quill finds himself the prime target of a manhunt after discovering an orb wanted by Ronan the Accuser.");
 		popularMovies.add(m2);
-		/*
-		MovieData m3 = new MovieData("/5N20rQURev5CNDcMjHVUZhpoCNC.jpg","Captain America: Civil War");
-		popularMovies.add(m3);
-		MovieData m4 = new MovieData("/tgfRDJs5PFW20Aoh1orEzuxW8cN.jpg","Mechanic: Resurrection");
-		popularMovies.add(m4);
-		MovieData m5 = new MovieData("/nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg","Interstellar");
-		popularMovies.add(m5);
-		MovieData m6 = new MovieData("/oDL2ryJ0sV2bmjgshVgJb3qzvwp.jpg","Teenage Mutant Ninja Turtles");
-		popularMovies.add(m6);
-		*/
 		return popularMovies;
 	}
 
@@ -118,13 +129,24 @@ public class MainActivity extends AppCompatActivity {
 		} else if (id == R.id.action_refresh){
 			toastText="You selected Refresh menu! getting data from API!";
 			showToast(getApplicationContext(),toastText);
-			FetchMoviesTask movieTask = new FetchMoviesTask();
-			String sortPreference = Utility.getPreferredSortOrder(getApplicationContext());
-			movieTask.execute(sortPreference);
+			executeFetchMovieTask();
 			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void executeFetchMovieTask(){
+		FetchMoviesTask movieTask = new FetchMoviesTask();
+		String sortPreference = Utility.getPreferredSortOrder(getApplicationContext());
+		movieTask.execute(sortPreference);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		Log.v(LOG_TAG, "****onSaveInstanceState: " + popularMovies);
+		outState.putParcelableArrayList("popularmovies", popularMovies);
+		super.onSaveInstanceState(outState);
 	}
 
 	private void showToast(Context context, CharSequence text){
@@ -268,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
 				}
 				Log.v(LOG_TAG, "In post Execute movie task: mImageAdapter Size" + mImageAdapter.getCount());
 				Log.v(LOG_TAG, "In post Execute movie task: result.get(0):" + result.get(0).getMovieName()+ "mImageAdapter.get(0):" + mImageAdapter.getItem(0).toString());
+				popularMovies = result;
 				mImageAdapter.notifyDataSetChanged();
 				Log.v(LOG_TAG, "***********notified data change to adapter" );
 			} else {
