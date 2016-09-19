@@ -3,6 +3,7 @@ package com.example.android.popularmovies;
 import com.example.android.popularmovies.adapter.ImageAdapter;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -95,12 +96,16 @@ public class MainActivity extends AppCompatActivity {
 
 	private ArrayList<MovieData> getHardcodedPopularMoviesData() {
 		popularMovies = new ArrayList<MovieData>();
+		MovieData emptyMovieData = new MovieData("","","", "","","");
+		popularMovies.add(emptyMovieData);
+		/*
 		MovieData m1 = new MovieData("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg","Suicide Squad","2016", "08.03/16","5.88",
 				"From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.");
 		popularMovies.add(m1);
 		MovieData m2 = new MovieData("/y31QB9kn3XSudA15tV7UWQ9XLuW.jpg","Guardians of the Galaxy","2014","07.30/14","7.96",
 				"Light years from Earth, 26 years after being abducted, Peter Quill finds himself the prime target of a manhunt after discovering an orb wanted by Ronan the Accuser.");
 		popularMovies.add(m2);
+		*/
 		return popularMovies;
 	}
 
@@ -159,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
 	//Start of inner class
 	public class FetchMoviesTask extends AsyncTask<String, Void, ArrayList<MovieData>> {
 		private final String LOG_TAG = FetchMoviesTask.class.getSimpleName();
+		private ProgressDialog dialog = new ProgressDialog(MainActivity.this);
     /* ########## Start of JSON Parsing Helper methods ###### */
 
 		private ArrayList<MovieData> getMoviesDataFromJson(String moviesJsonStr)
@@ -277,6 +283,13 @@ public class MainActivity extends AppCompatActivity {
 
 			return null;
 		}
+		/** progress dialog to show user that the backup is processing. */
+		/** application context. */
+		@Override
+		protected void onPreExecute() {
+			this.dialog.setMessage("Please wait");
+			this.dialog.show();
+		}
 
 		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		@Override
@@ -296,6 +309,10 @@ public class MainActivity extends AppCompatActivity {
 				Log.v(LOG_TAG, "***********notified data change to adapter" );
 			} else {
 				Log.v(LOG_TAG, "In post Execute Movie data from API was null" );
+			}
+
+			if (dialog.isShowing()) {
+				dialog.dismiss();
 			}
 		}
 	}
