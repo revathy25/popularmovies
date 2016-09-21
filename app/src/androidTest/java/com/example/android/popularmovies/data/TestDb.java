@@ -78,7 +78,7 @@ public class TestDb extends AndroidTestCase {
         Cursor c2 = db.rawQuery("PRAGMA table_info(" + PopularMoviesContract.PopularEntry.TABLE_NAME + ")",
                 null);
 
-        assertTrue("Error: This means that we were unable to query the database for table information."+ c2.getCount(),
+        assertTrue("Error: This means that we were unable to query the database for table information.",
                 c2.moveToFirst());
 
         // Build a HashSet of all of the column names we want to look for
@@ -90,15 +90,13 @@ public class TestDb extends AndroidTestCase {
         int columnNameIndex = c2.getColumnIndex("name");
         do {
             String columnName = c2.getString(columnNameIndex);
-            //assertTrue("columnName="+columnName,false);
+            Log.i(LOG_TAG,"columnName="+columnName);
             popularColumnHashSet.remove(columnName);
-        } while(c.moveToNext());
+        } while(c2.moveToNext());
 
-        //* TODO , Check why this test case fails
-/*
-        assertTrue("Error: The database doesn't contain all of the required popular entry columns:"+popularColumnHashSet.size(),
+       assertTrue("Error: The database doesn't contain all of the required popular entry columns:"+popularColumnHashSet.size(),
                 popularColumnHashSet.isEmpty());
-*/
+
 
         db.close();
     }
