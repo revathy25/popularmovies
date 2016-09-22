@@ -1,6 +1,7 @@
 package com.example.android.popularmovies.data;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -42,6 +43,14 @@ public class PopularMoviesContract  {
         public static final String COLUMN_MOVIE_DB_VOTE_COUNT = "vote_count";
         public static final String COLUMN_MOVIE_DB_VOTE_AVERAGE = "vote_average";
 
+        public static Uri buildMovieUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static String getMovieIdFromUri(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+
     }
 
     /* Inner class that defines the table contents of the polpular table */
@@ -64,6 +73,10 @@ public class PopularMoviesContract  {
 
         // movie db , movie id returned from the api, ex : "id": 278
         public static final String COLUMN_MOVIE_DB_MOVIE_ID = "movie_id";
+
+        public static Uri buildPopularUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
 
     }
 
