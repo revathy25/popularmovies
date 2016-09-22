@@ -32,6 +32,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <!-- Content Authority tags -->
+        <provider android:authorities="@string/content_authority"
+            android:name=".data.PopularMoviesProvider" />
     </application>
 
 </manifest>
