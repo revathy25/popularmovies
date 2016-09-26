@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		Log.v(LOG_TAG, "****onSaveInstanceState: " + popularMovies);
-		outState.putParcelableArrayList("popularmovies", popularMovies);
+		outState.putParcelableArrayList("popularmovies", (ArrayList)mImageAdapter.getDataArray());
 		super.onSaveInstanceState(outState);
 	}
 

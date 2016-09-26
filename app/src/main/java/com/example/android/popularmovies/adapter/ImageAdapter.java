@@ -1,6 +1,7 @@
 package com.example.android.popularmovies.adapter;
 
 import android.content.Context;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,12 @@ import java.util.List;
 public class ImageAdapter extends ArrayAdapter {
 	private Context context;
 	private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w185";
+	private final List<MovieData>  backingArray;
 
 	public ImageAdapter(Context context,int resource, List<MovieData> movieData) {
 		super(context,resource,movieData);
 		this.context = context;
+		backingArray = movieData;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -58,4 +61,7 @@ public class ImageAdapter extends ArrayAdapter {
 		return gridView;
 	}
 
+	public List<MovieData> getDataArray() {
+		return backingArray;
+	}
 }
